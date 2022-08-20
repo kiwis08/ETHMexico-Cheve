@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ethmexico/custom_color.dart';
 import 'package:ethmexico/model/transaction.dart';
 import 'bottle_transaction.dart';
+import 'balance_text.dart';
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class DashboardScreen extends ConsumerWidget {
     final size = MediaQuery.of(context).size;
     final name = ref.watch(usernameProvider);
     final transactions = ref.watch(transactionsProvider);
+    final userBalance = ref.watch(userBalanceProvider);
     return Scaffold(
       backgroundColor: Color(0xFFE5E5E5),
       appBar: AppBar(
@@ -52,22 +54,7 @@ class DashboardScreen extends ConsumerWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.all(8),
-                      child: RichText(
-                        text: TextSpan(
-                            text: "\$15.76",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline5
-                                ?.copyWith(fontWeight: FontWeight.bold),
-                            children: [
-                              TextSpan(
-                                  text: " bMXN",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: customGreen,
-                                      fontSize: 20))
-                            ]),
-                      ),
+                      child: UserBalanceText(userBalance: userBalance),
                     )
                   ],
                 ),
