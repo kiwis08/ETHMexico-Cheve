@@ -10,8 +10,9 @@ class CodeScannerScreen extends StatelessWidget {
       body: MobileScanner(
         allowDuplicates: false,
         onDetect: (barcode, arguments) {
-          if (barcode.rawValue == null) {
-
+          if (barcode.rawValue != null) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(barcode.rawValue!)));
+            print(barcode.rawValue);
           } else {
             // TODO: Do something with scanned code
           }
