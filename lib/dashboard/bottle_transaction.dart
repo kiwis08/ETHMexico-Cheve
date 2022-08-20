@@ -1,7 +1,9 @@
-import 'package:ethmexico/model/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:ethmexico/model/transaction.dart';
+import 'package:ethmexico/custom_color.dart';
 
 class BottleTransaction extends StatelessWidget {
   final AsyncValue<List<Transaction>> transactions;
@@ -20,7 +22,7 @@ class BottleTransaction extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(24),
             child: Text(
-              "Activity",
+              "Your activity",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -52,13 +54,13 @@ class BottleTransaction extends StatelessWidget {
                                   "Bottle deposit",
                                   style: TextStyle(fontSize: 13),
                                 ),
-                                Text(item.date.toString()),
+                                Text(DateFormat("yyyy-MM-dd").format(item.date)),
                               ],
                             ),
                           ),
                         ],
                       ),
-                      Text("+\$15.26"),
+                      Text("+\$${item.amount}", style: TextStyle(color: customGreen, fontWeight: FontWeight.bold),),
                     ],
                   ),
                 )
@@ -67,6 +69,6 @@ class BottleTransaction extends StatelessWidget {
 
         ],
       );
-    }, error: (error, st) => Text(error.toString()), loading: () => CircularProgressIndicator());
+    }, error: (error, st) => Text(error.toString()), loading: () => Center(child: CircularProgressIndicator()));
   }
 }

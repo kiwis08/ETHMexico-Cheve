@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ethmexico/shared/shared_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ethmexico/custom_color.dart';
-import 'package:ethmexico/shared/bottle_transaction.dart';
 import 'package:ethmexico/model/transaction.dart';
+import 'bottle_transaction.dart';
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({Key? key}) : super(key: key);
