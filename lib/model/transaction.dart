@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 
 class Transaction {
-  Transaction({required this.bottleCount, required this.date});
+  Transaction({required this.bottleCount, required this.date}) : this.amount = bottleCount * 3.5; // TODO: Calculate amount
 
   factory Transaction.fromStringDate({required bottleCount, required date}) {
     final formattedDate = DateFormat("yyyy-MM-dd").parse(date);
@@ -9,7 +9,7 @@ class Transaction {
   }
 
   factory Transaction.fromMap(Map<String, dynamic> map) {
-    final count = map['bottleCount'];
+    final int count = map['bottleCount'];
     String strDate = map['date'];
     final formattedDate = DateFormat("yyyy-MM-dd").parse(strDate);
     return Transaction(bottleCount: count, date: formattedDate);
@@ -17,4 +17,5 @@ class Transaction {
 
   int bottleCount;
   DateTime date;
+  double amount;
 }
