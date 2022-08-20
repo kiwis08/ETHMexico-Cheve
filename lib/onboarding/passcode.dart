@@ -5,15 +5,17 @@ import 'package:passcode_screen/keyboard.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:async';
 import 'package:ethmexico/custom_color.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ethmexico/shared/shared_providers.dart';
 
-class UserPasscodeScreen extends StatefulWidget {
+class UserPasscodeScreen extends ConsumerStatefulWidget {
   const UserPasscodeScreen({Key? key}) : super(key: key);
 
   @override
-  State<UserPasscodeScreen> createState() => _UserPasscodeScreenState();
+  ConsumerState<UserPasscodeScreen> createState() => _UserPasscodeScreenState();
 }
 
-class _UserPasscodeScreenState extends State<UserPasscodeScreen> {
+class _UserPasscodeScreenState extends ConsumerState<UserPasscodeScreen> {
   final StreamController<bool> _verificationNotifier =
       StreamController<bool>.broadcast();
 
@@ -23,17 +25,22 @@ class _UserPasscodeScreenState extends State<UserPasscodeScreen> {
       circleUIConfig: CircleUIConfig(borderColor: customGreen, fillColor: customGreen),
       keyboardUIConfig: KeyboardUIConfig(primaryColor: customGreen, digitTextStyle: TextStyle(color: customGreen, fontSize: 30)),
       backgroundColor: Colors.white,
-        title: Text("Passcode"),
+        title: Text("Enter a 6 digit passcode"),
         passwordEnteredCallback: (passcode) {
-        context.go("/dashboard");
+        ref.read(passcodeProvider.notifier).state = passcode;
+        context.push("/confirm-passcode");
         },
-        cancelButton: ElevatedButton(
-          onPressed: () {
-            context.pop();
-          },
-          child: Text("CANCEL"),
-        ),
+        cancelButton: Text("CANCEL"),
         deleteButton: Text("DELETE"),
+        cancelCallback: () {
+        context.pop();
+        },
         shouldTriggerVerification: _verificationNotifier.stream);
+  }
+
+  @override
+  void dispose() {
+    _verificationNotifier.close();
+    super.dispose();
   }
 }
