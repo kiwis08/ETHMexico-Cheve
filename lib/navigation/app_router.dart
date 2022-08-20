@@ -4,6 +4,7 @@ import 'package:ethmexico/onboarding/signup_screen.dart';
 import 'package:ethmexico/onboarding/passcode.dart';
 import 'package:ethmexico/dashboard/dashboard_screen.dart';
 import 'package:ethmexico/onboarding/confirm_passcode.dart';
+import 'package:ethmexico/scanner/code_scanner_screen.dart';
 
 class AppRouter {
   AppRouter();
@@ -38,6 +39,13 @@ class AppRouter {
         pageBuilder: (context, state) => MaterialPage<void>(
           key: state.pageKey,
           child: DashboardScreen(),
+        ),
+      ),
+      GoRoute(
+        path: '/scanner',
+        pageBuilder: (context, state) => MaterialPage<void>(
+          key: state.pageKey,
+          child: CodeScannerScreen(),
         ),
       ),
     ],

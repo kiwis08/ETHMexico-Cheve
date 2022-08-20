@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ethmexico/shared/shared_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:ethmexico/shared/shared_providers.dart';
 import 'package:ethmexico/custom_color.dart';
 import 'package:ethmexico/model/transaction.dart';
 import 'bottle_transaction.dart';
@@ -24,7 +25,9 @@ class DashboardScreen extends ConsumerWidget {
         centerTitle: false,
         title: Text("Hello, ${name}"),
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.qr_code_scanner))
+          IconButton(onPressed: () {
+            context.push("/scanner");
+          }, icon: Icon(Icons.qr_code_scanner))
         ],
       ),
       body: Center(
