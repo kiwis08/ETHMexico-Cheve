@@ -12,6 +12,7 @@ class DashboardScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
     final name = ref.watch(usernameProvider);
+    final transactions = ref.watch(transactionsProvider);
     return Scaffold(
       backgroundColor: Color(0xFFE5E5E5),
       appBar: AppBar(
@@ -54,15 +55,25 @@ class DashboardScreen extends ConsumerWidget {
                       child: RichText(
                         text: TextSpan(
                             text: "\$15.76",
-                            style: Theme.of(context).textTheme.headline5?.copyWith(fontWeight: FontWeight.bold),
-                            children: [TextSpan(text: " bMXN", style: TextStyle(fontWeight: FontWeight.bold, color: customGreen, fontSize: 20))]),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline5
+                                ?.copyWith(fontWeight: FontWeight.bold),
+                            children: [
+                              TextSpan(
+                                  text: " bMXN",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: customGreen,
+                                      fontSize: 20))
+                            ]),
                       ),
                     )
                   ],
                 ),
               ),
             ),
-            BottleTransaction(transactions: [Transaction(bottleCount: 5, date: "date"), Transaction(bottleCount: 5, date: "date"), Transaction(bottleCount: 5, date: "date")])
+            BottleTransaction(transactions: transactions)
           ],
         ),
       ),
