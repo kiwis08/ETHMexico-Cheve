@@ -28,40 +28,46 @@ class DashboardScreen extends ConsumerWidget {
         ],
       ),
       body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: Container(
-                width: size.width * 0.9,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.white,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(8),
-                      child: RichText(
-                        text: TextSpan(
-                            text: "Your ",
-                            style: Theme.of(context).textTheme.headline5,
-                            children: [TextSpan(text: "balance")]),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            await ref.refresh(transactionsProvider);
+            return await ref.refresh(userBalanceProvider);
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(16),
+                child: Container(
+                  width: size.width * 0.9,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(8),
+                        child: RichText(
+                          text: TextSpan(
+                              text: "Your ",
+                              style: Theme.of(context).textTheme.headline5,
+                              children: [TextSpan(text: "balance")]),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8),
-                      child: UserBalanceText(userBalance: userBalance),
-                    )
-                  ],
+                      Padding(
+                        padding: EdgeInsets.all(8),
+                        child: UserBalanceText(userBalance: userBalance),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-            BottleTransaction(transactions: transactions)
-          ],
+              BottleTransaction(transactions: transactions)
+            ],
+          ),
         ),
       ),
     );

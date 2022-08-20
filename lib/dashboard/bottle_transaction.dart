@@ -16,8 +16,8 @@ class BottleTransaction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return transactions.when(data: (data) {
-      return Column(
+    return Expanded(
+      child: Column(
         children: [
           Padding(
             padding: EdgeInsets.all(24),
@@ -29,46 +29,72 @@ class BottleTransaction extends StatelessWidget {
               ),
             ),
           ),
-          Column(
-            children: [for (var item in data) Padding(
-                padding: const EdgeInsets.all(8),
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  width: size.width * 0.9,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white,
+          transactions.when(
+              data: (data) {
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return TransactionRow(
+                        transaction: data[index],
+                      );
+                    },
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                );
+              },
+              error: (error, st) => Text(error.toString()),
+              loading: () => Center(
+                    child: CircularProgressIndicator(),
+                  )),
+        ],
+      ),
+    );
+  }
+}
+
+class TransactionRow extends StatelessWidget {
+  const TransactionRow({Key? key, required this.transaction}) : super(key: key);
+
+  final Transaction transaction;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+      child: Container(
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: Colors.white,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                SvgPicture.asset("assets/deposit.svg"),
+                Padding(
+                  padding: const EdgeInsets.only(left: 6),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          SvgPicture.asset("assets/deposit.svg"),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 6),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Bottle deposit",
-                                  style: TextStyle(fontSize: 13),
-                                ),
-                                Text(DateFormat("yyyy-MM-dd").format(item.date)),
-                              ],
-                            ),
-                          ),
-                        ],
+                      Text(
+                        "Bottle deposit",
+                        style: TextStyle(fontSize: 13),
                       ),
-                      Text("+\$${item.amount}", style: TextStyle(color: customGreen, fontWeight: FontWeight.bold),),
+                      Text(DateFormat("yyyy-MM-dd").format(transaction.date)),
                     ],
                   ),
-                )
-            ),],
-          ),
-
-        ],
-      );
-    }, error: (error, st) => Text(error.toString()), loading: () => Center(child: CircularProgressIndicator()));
+                ),
+              ],
+            ),
+            Text(
+              "+\$${transaction.amount}",
+              style: TextStyle(color: customGreen, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
