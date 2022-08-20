@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ethmexico/onboarding/signup_screen.dart';
 import 'package:ethmexico/onboarding/passcode.dart';
 import 'package:ethmexico/dashboard/dashboard_screen.dart';
+import 'package:ethmexico/onboarding/confirm_passcode.dart';
 
 class AppRouter {
   AppRouter();
@@ -23,6 +24,13 @@ class AppRouter {
         pageBuilder: (context, state) => MaterialPage<void>(
           key: state.pageKey,
           child: UserPasscodeScreen(),
+        ),
+      ),
+      GoRoute(
+        path: '/confirm-passcode',
+        pageBuilder: (context, state) => MaterialPage<void>(
+          key: state.pageKey,
+          child: UserConfirmPasscodeScreen(),
         ),
       ),
       GoRoute(
