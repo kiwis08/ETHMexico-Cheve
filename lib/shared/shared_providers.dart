@@ -8,3 +8,7 @@ final transactionsProvider = FutureProvider((ref) {
   final wallet = WalletManager();
   return wallet.getUserTransactions();
 });
+final userBalanceProvider = FutureProvider((ref) {
+  final wallet = WalletManager();
+  return wallet.getUserBalance();
+});
