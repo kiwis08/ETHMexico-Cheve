@@ -9,7 +9,9 @@ class RoundedTextFormField extends StatelessWidget {
         this.suffixIcon,
         this.obscure = false,
         this.autofillHints,
-        required this.inputType})
+        required this.inputType,
+        this.validator,
+      })
       : super(key: key);
 
   final TextEditingController controller;
@@ -19,6 +21,7 @@ class RoundedTextFormField extends StatelessWidget {
   final Icon? suffixIcon;
   final TextInputType inputType;
   final Iterable<String>? autofillHints;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +29,7 @@ class RoundedTextFormField extends StatelessWidget {
       controller: controller,
       keyboardType: inputType,
       autofillHints: autofillHints,
+      validator: validator,
       decoration: InputDecoration(
           prefixIcon: prefixIcon,
           suffixIcon: Padding(
@@ -38,7 +42,7 @@ class RoundedTextFormField extends StatelessWidget {
               borderSide: BorderSide.none),
           floatingLabelBehavior: FloatingLabelBehavior.never,
       filled: true,
-      fillColor: Colors.black12),
+      fillColor: Colors.black12,),
     );
   }
 }
