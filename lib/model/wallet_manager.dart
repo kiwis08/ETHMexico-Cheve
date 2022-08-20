@@ -3,13 +3,15 @@ import 'transaction.dart';
 class WalletManager {
 
 
-  Future<int> getUserBalance() async {
+  Future<double> getUserBalance() async {
     // TODO: Get balance from backend
-    return 18;
+    await Future.delayed(Duration(seconds: 2));
+    return 40.34;
   }
 
   Future<List<Transaction>> getUserTransactions() async {
     // TODO: Get transactions from backend
+    await Future.delayed(Duration(seconds: 3));
     List<Transaction> transactions;
     transactions = [
       Transaction.fromStringDate(bottleCount: 5, date: "2022-08-20"),
