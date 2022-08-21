@@ -21,7 +21,7 @@ class UserBalanceText extends StatelessWidget {
                   ?.copyWith(fontWeight: FontWeight.bold),
               children: [
                 TextSpan(
-                    text: " bMXN",
+                    text: " MATIC",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: customGreen,
