@@ -1,48 +1,38 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:ethmexico/model/wallet_manager.dart';
 import 'package:wallet_connect/wallet_connect.dart';
 import 'package:http/http.dart' as http;
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ethmexico/model/wallet_manager.dart';
+import 'package:ethmexico/shared/shared_providers.dart';
 
-class CodeScannerScreen extends StatefulWidget {
+
+class CodeScannerScreen extends ConsumerStatefulWidget {
   const CodeScannerScreen({Key? key}) : super(key: key);
 
   @override
-  State<CodeScannerScreen> createState() => _CodeScannerScreenState();
-}
-const maticRpcUri =
-    'https://rpc-mainnet.maticvigil.com/v1/140d92ff81094f0f3d7babde06603390d7e581be';
-
-enum MenuItems {
-  PREVIOUS_SESSION,
-  KILL_SESSION,
-  SCAN_QR,
-  PASTE_CODE,
-  CLEAR_CACHE,
+  ConsumerState<CodeScannerScreen> createState() => _CodeScannerScreenState();
 }
 
-class _CodeScannerScreenState extends State<CodeScannerScreen> {
+class _CodeScannerScreenState extends ConsumerState<CodeScannerScreen> {
   late WCClient _wcClient;
   late TextEditingController _textEditingController;
   late String walletAddress, privateKey;
-  bool connected = false;
   WCSessionStore? _sessionStore;
-  final _web3client = Web3Client(
-    maticRpcUri,
-    http.Client(),
-  );
 
   @override
   void initState() {
-    _initialize();
+    final walletAddr = ref.read(walletAddressProvider);
+    final privKey = ref.read(privateKeyProvider);
+    _initialize(walletAddr, privKey);
     super.initState();
   }
 
-  _initialize() async {
+  _initialize(String walletAddr, String privKey) async {
     _wcClient = WCClient(
       onSessionRequest: _onSessionRequest,
       onFailure: _onSessionError,
@@ -53,8 +43,8 @@ class _CodeScannerScreenState extends State<CodeScannerScreen> {
       onCustomRequest: (_, __) {},
       onConnect: _onConnect,
     );
-    walletAddress = '';
-    privateKey = '';
+    walletAddress = walletAddr;
+    privateKey = privKey;
     _textEditingController = TextEditingController();
   }
 
@@ -66,7 +56,6 @@ class _CodeScannerScreenState extends State<CodeScannerScreen> {
         allowDuplicates: false,
         onDetect: (barcode, arguments) {
           if (barcode.rawValue != null) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(barcode.rawValue!)));
             final value = barcode.rawValue!;
             _qrScanHandler(value);
           }
@@ -93,9 +82,7 @@ class _CodeScannerScreenState extends State<CodeScannerScreen> {
   }
 
   _onConnect() {
-    setState(() {
-      connected = true;
-    });
+
   }
 
   _onSessionRequest(int id, WCPeerMeta peerMeta) {
@@ -170,9 +157,6 @@ class _CodeScannerScreenState extends State<CodeScannerScreen> {
   }
 
   _onSessionError(dynamic message) {
-    setState(() {
-      connected = false;
-    });
     showDialog(
       context: context,
       builder: (_) {

@@ -23,9 +23,10 @@ class WalletManager {
     }
   }
 
-  Future<double> getUserBalance() async {
+  Future<double> getUserBalance(String address) async {
     // TODO: Get balance from backend
-    await Future.delayed(Duration(seconds: 2));
+    final response = await http.get(Uri.parse("http://168.62.174.55/balance?walletAddress=${address}"));
+    print(response.body);
     return 40.34;
   }
 

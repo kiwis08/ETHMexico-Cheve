@@ -9,8 +9,9 @@ final transactionsProvider = FutureProvider((ref) {
   return wallet.getUserTransactions();
 });
 final userBalanceProvider = FutureProvider((ref) {
+  final address = ref.watch(walletAddressProvider);
   final wallet = WalletManager();
-  return wallet.getUserBalance();
+  return wallet.getUserBalance(address);
 });
 
 final walletAddressProvider = StateProvider<String>((ref) => "");
