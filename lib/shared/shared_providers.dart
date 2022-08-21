@@ -12,3 +12,6 @@ final userBalanceProvider = FutureProvider((ref) {
   final wallet = WalletManager();
   return wallet.getUserBalance();
 });
+
+final walletAddressProvider = StateProvider<String>((ref) => "");
+final privateKeyProvider = StateProvider<String>((ref) => "");
