@@ -6,6 +6,7 @@ import 'package:wallet_connect/wallet_connect.dart';
 import 'package:http/http.dart' as http;
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
+import 'package:go_router/go_router.dart';
 
 class CodeScannerScreen extends StatefulWidget {
   const CodeScannerScreen({Key? key}) : super(key: key);
@@ -52,7 +53,6 @@ class _CodeScannerScreenState extends State<CodeScannerScreen> {
       onCustomRequest: (_, __) {},
       onConnect: _onConnect,
     );
-    // TODO: Mention walletAddress and privateKey while connecting
     walletAddress = '';
     privateKey = '';
     _textEditingController = TextEditingController();
@@ -69,8 +69,6 @@ class _CodeScannerScreenState extends State<CodeScannerScreen> {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(barcode.rawValue!)));
             final value = barcode.rawValue!;
             _qrScanHandler(value);
-          } else {
-            // TODO: Do something with scanned code
           }
         },
       ),
@@ -168,7 +166,7 @@ class _CodeScannerScreenState extends State<CodeScannerScreen> {
           ],
         );
       },
-    );
+    ).then((value) => context.pop());
   }
 
   _onSessionError(dynamic message) {
