@@ -36,7 +36,6 @@ class WalletManager {
   }
 
   Future<List<Transaction>> getUserTransactions() async {
-    // TODO: Get transactions from backend
     await Future.delayed(Duration(seconds: 1));
     List<Transaction> transactions;
     transactions = [

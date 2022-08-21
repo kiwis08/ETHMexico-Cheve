@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 
 class Transaction {
-  Transaction({required this.bottleCount, required this.date}) : this.amount = bottleCount * 1; // TODO: Calculate amount
+  Transaction({required this.bottleCount, required this.date}) : this.amount = bottleCount * 1;
 
   factory Transaction.fromStringDate({required bottleCount, required date}) {
     final formattedDate = DateFormat("yyyy-MM-dd").parse(date);

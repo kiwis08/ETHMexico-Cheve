@@ -125,7 +125,6 @@ class _CodeScannerScreenState extends ConsumerState<CodeScannerScreen> {
                     onPressed: () async {
                       _wcClient.approveSession(
                         accounts: [walletAddress],
-                        // TODO: Mention Chain ID while connecting
                         chainId: 1,
                       );
                       _sessionStore = _wcClient.sessionStore;
