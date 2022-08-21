@@ -14,7 +14,7 @@ class PrivateWalletData {
 class WalletManager {
 
   Future<PrivateWalletData?> createWallet() async {
-    final response = await http.get(Uri.parse("http://192.168.100.209:3000/create-wallet"));
+    final response = await http.get(Uri.parse("http://MacBook-Air-de-Santiago-Quihui.local:3000/create-wallet"));
     print(response.body);
     if (response.statusCode == 200) {
       return PrivateWalletData.fromMap(jsonDecode(response.body));
@@ -25,11 +25,14 @@ class WalletManager {
 
   Future<double> getUserBalance(String address) async {
     print(address);
-    final response = await http.get(Uri.parse("http://192.168.100.209:3000/balance?walletAddress=${address}"));
+    final response = await http.get(Uri.parse("http://MacBook-Air-de-Santiago-Quihui.local:3000/balance?walletAddress=${address}"));
     print(response.body);
     print(jsonDecode(response.body)['balance']);
-    final balance = double.parse(jsonDecode(response.body)['balance']);
-    return balance;
+    if (response.statusCode == 200) {
+      final balance = double.parse(jsonDecode(response.body)['balance']);
+      return balance;
+    }
+    return 0.0;
   }
 
   Future<List<Transaction>> getUserTransactions() async {
