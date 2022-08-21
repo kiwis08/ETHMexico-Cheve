@@ -5,6 +5,7 @@ import 'package:ethmexico/onboarding/passcode.dart';
 import 'package:ethmexico/dashboard/dashboard_screen.dart';
 import 'package:ethmexico/onboarding/confirm_passcode.dart';
 import 'package:ethmexico/scanner/code_scanner_screen.dart';
+import 'package:ethmexico/onboarding/private_key_screen.dart';
 
 class AppRouter {
   AppRouter();
@@ -32,6 +33,13 @@ class AppRouter {
         pageBuilder: (context, state) => MaterialPage<void>(
           key: state.pageKey,
           child: UserConfirmPasscodeScreen(),
+        ),
+      ),
+      GoRoute(
+        path: '/private-key',
+        pageBuilder: (context, state) => MaterialPage<void>(
+          key: state.pageKey,
+          child: PrivateKeyScreen(),
         ),
       ),
       GoRoute(
