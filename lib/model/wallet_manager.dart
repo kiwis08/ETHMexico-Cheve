@@ -14,7 +14,7 @@ class PrivateWalletData {
 class WalletManager {
 
   Future<PrivateWalletData?> createWallet() async {
-    final response = await http.get(Uri.parse("http://168.62.174.55/create-wallet"));
+    final response = await http.get(Uri.parse("http://192.168.100.209:3000/create-wallet"));
     print(response.body);
     if (response.statusCode == 200) {
       return PrivateWalletData.fromMap(jsonDecode(response.body));
@@ -24,10 +24,12 @@ class WalletManager {
   }
 
   Future<double> getUserBalance(String address) async {
-    // TODO: Get balance from backend
-    final response = await http.get(Uri.parse("http://168.62.174.55/balance?walletAddress=${address}"));
+    print(address);
+    final response = await http.get(Uri.parse("http://192.168.100.209:3000/balance?walletAddress=${address}"));
     print(response.body);
-    return 40.34;
+    print(jsonDecode(response.body)['balance']);
+    final balance = double.parse(jsonDecode(response.body)['balance']);
+    return balance;
   }
 
   Future<List<Transaction>> getUserTransactions() async {
